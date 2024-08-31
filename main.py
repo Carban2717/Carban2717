@@ -1,36 +1,27 @@
 import os
 import requests
-from bs4 import BeautifulSoup
-from colorama import init, Fore, Back, Style
-import string
-import re
+import threading
+import concurrent.futures
+import time
+import socket
+import socks
+from datetime import datetime
+from colorama import Fore, Style
+from pystyle import Write, System, Colors
 
-# Colorama'nın başlatılması
-init(autoreset=True)
+# KETTİP ASCII Art
+ascii_art = """
 
-# ASCII sanatı
-ascii_art = f"""
-{Fore.BLUE}
- __    __  ________  ________  ________  ______  _______  
-|  \  /  \|        \|        \|        \|      \|       \ 
-| $$ /  $$| $$$$$$$$ \$$$$$$$$ \$$$$$$$$ \$$$$$$| $$$$$$$\
-| $$/  $$ | $$__       | $$      | $$     | $$  | $$__/ $$
-| $$  $$  | $$  \      | $$      | $$     | $$  | $$    $$
-| $$$$$\  | $$$$$      | $$      | $$     | $$  | $$$$$$$ 
-| $$ \$$\ | $$_____    | $$      | $$    _| $$_ | $$      
-| $$  \$$\| $$     \   | $$      | $$   |   $$ \| $$      
- \$$   \$$ \$$$$$$$$    \$$       \$$    \$$$$$$ \$$      
+ _        _______ ___________________________ _______ 
+| \    /\(  ____ \\__   __/\__   __/\__   __/(  ____ ) 
+|  \  / /| (    \/   ) (      ) (      ) (   | (    )|
+|  (_/ / | (__       | |      | |      | |   | (____)|
+|   _ (  |  __)      | |      | |      | |   |  _____)
+|  ( \ \ | (         | |      | |      | |   | (      
+|  /  \ \| (____/\   | |      | |   ___) (___| )      
+|_/    \/(_______/   )_(      )_(   \_______/|/       
 
-  ______    ______   _______   ______  _______  ________   ______  
- /      \  /      \ |       \ |      \|       \|        \ /      \ 
-|  $$$$$$\|  $$$$$$\| $$$$$$$\ \$$$$$$| $$$$$$$\\$$$$$$$$|  $$$$$$\
-| $$___\$$| $$   \$$| $$__| $$  | $$  | $$__/ $$  | $$   | $$___\$$
- \$$    \ | $$      | $$    $$  | $$  | $$    $$  | $$    \$$    \ 
- _\$$$$$$\| $$   __ | $$$$$$$\  | $$  | $$$$$$$   | $$    _\$$$$$$\
-|  \__| $$| $$__/  \| $$  | $$ _| $$_ | $$        | $$   |  \__| $$
- \$$    $$ \$$    $$| $$  | $$|   $$ \| $$        | $$    \$$    $$
-  \$$$$$$   \$$$$$$  \$$   \$$ \$$$$$$ \$$         \$$     \$$$$$$ 
-                                                                   
-                                                                   
-                                                                   
+Kettip Scripts Tools
+
+ NOT: Miktar belirlemeyi ayarlamayı unuttum 99  99 99 girebilirsiniz                        
 """
