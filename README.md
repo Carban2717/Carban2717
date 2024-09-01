@@ -1,1 +1,3 @@
-test
+hata varsa bildirin.
+
+kodları çalmayınız.
